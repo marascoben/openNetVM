@@ -37,9 +37,17 @@ The [develop][dev] branch tracks experimental builds (active development) wherea
 
 You can find information about research projects building on [OpenNetVM][onvm] at the [UCR/GW SDNFV project site][sdnfv]. OpenNetVM is supported in part by NSF grants CNS-1422362 and CNS-1522546.
 
-Installing
+Get Started
 --
-To install openNetVM, please see the [openNetVM Installation][install] guide for a thorough walkthrough.
+We've provided a bash script to assist with setting up your development environment for working with OpenNetVM. Take a look at [`scripts/setup.sh`](/scripts/setup.sh) to see a full list of installed packages.
+
+From the `openNetVM` folder, run the following command:
+```
+./scripts/setup.sh
+```
+
+Once that's completed, head over to the [Getting Started](/docs/Install.md) guide for compiling OpenNetVM/DPDK and running your first NF.
+
 
 Using openNetVM
 --
