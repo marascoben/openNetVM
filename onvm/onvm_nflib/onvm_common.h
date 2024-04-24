@@ -114,16 +114,16 @@ struct onvm_pkt_meta {
         uint8_t chain_index;  /*index of the current step in the service chain*/
         uint8_t flags;        /* bits for custom NF data. Use with caution to prevent collisions from different NFs. */
 };
+typedef struct onvm_pkt_meta onvm_pkt_meta_t;
 
 static inline struct onvm_pkt_meta *
-onvm_get_pkt_meta(struct rte_mbuf *pkt) {
-        return (struct onvm_pkt_meta *)&pkt->udata64;
+onvm_get_pkt_meta(struct rte_mbuf *pkt, int pkt_meta_offset) {
+        return RTE_MBUF_DYNFIELD(pkt, pkt_meta_offset, struct onvm_pkt_meta *);
 }
 
 static inline uint8_t
-onvm_get_pkt_chain_index(struct rte_mbuf *pkt) {
-        struct onvm_pkt_meta* pkt_meta = (struct onvm_pkt_meta*) &pkt->udata64;
-        return pkt_meta->chain_index;
+onvm_get_pkt_chain_index(struct rte_mbuf *pkt, int pkt_meta_offset) {
+        return (onvm_get_pkt_meta(pkt, pkt_meta_offset))->chain_index;
 }
 
 /*
@@ -210,6 +210,7 @@ struct onvm_configuration {
         struct {
                 uint8_t ONVM_NF_SHARE_CORES;
         } flags;
+        int dynfield_offset;
 };
 
 struct core_status {
