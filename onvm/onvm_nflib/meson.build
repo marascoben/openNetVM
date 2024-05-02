@@ -10,8 +10,19 @@ sources = files(
     'onvm_threading.c'
 )
 
-libonvm = static_library('libonvm', 
+libonvm_includes = include_directories('.')
+
+libonvm_deps = [
+    onvm_dpdk_shared_dep,
+    libonvmhelper_dep
+]
+
+libonvm = library(
+    'libonvm', 
     sources, 
-    include_directories : include_directories('.'),
-    dependencies : [onvm_dpdk_dep, libonvmhelper_dep])
-libonvm_dep = declare_dependency(link_with: libonvm)
+    include_directories : libonvm_includes,
+    dependencies : libonvm_deps)
+
+libonvm_dep = declare_dependency(
+    link_with: libonvm,
+    dependencies: libonvm_deps)

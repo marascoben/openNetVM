@@ -115,18 +115,17 @@ check_all_ports_link_status(uint8_t port_num, uint32_t port_mask);
 
 static const struct rte_eth_conf port_conf = {
     .rxmode = {
-            .mq_mode = ETH_MQ_RX_RSS,
-            .max_rx_pkt_len = RTE_ETHER_MAX_LEN,
-            .split_hdr_size = 0,
-            .offloads = DEV_RX_OFFLOAD_CHECKSUM,
+            .mq_mode = RTE_ETH_MQ_RX_RSS,
+            .mtu = RTE_ETHER_MAX_LEN,
+            .offloads = RTE_ETH_RX_OFFLOAD_CHECKSUM,
         },
     .rx_adv_conf = {
             .rss_conf = {
-                    .rss_key = rss_symmetric_key, .rss_hf = ETH_RSS_IP | ETH_RSS_UDP | ETH_RSS_TCP | ETH_RSS_L2_PAYLOAD,
+                    .rss_key = rss_symmetric_key, .rss_hf = RTE_ETH_RSS_IP | RTE_ETH_RSS_UDP | RTE_ETH_RSS_TCP | RTE_ETH_RSS_L2_PAYLOAD,
                 },
         },
-    .txmode = {.mq_mode = ETH_MQ_TX_NONE,
-               .offloads = (DEV_TX_OFFLOAD_IPV4_CKSUM | DEV_TX_OFFLOAD_UDP_CKSUM | DEV_TX_OFFLOAD_TCP_CKSUM)},
+    .txmode = {.mq_mode = RTE_ETH_MQ_TX_NONE,
+               .offloads = (RTE_ETH_TX_OFFLOAD_IPV4_CKSUM | RTE_ETH_TX_OFFLOAD_UDP_CKSUM | RTE_ETH_TX_OFFLOAD_TCP_CKSUM)},
 };
 
 /*********************************Interfaces**********************************/
@@ -373,8 +372,8 @@ init_port(uint8_t port_num) {
         /* Standard DPDK port initialisation - config port, then set up
          * rx and tx rings */
         rte_eth_dev_info_get(port_num, &dev_info);
-        if (dev_info.tx_offload_capa & DEV_TX_OFFLOAD_MBUF_FAST_FREE)
-                local_port_conf.txmode.offloads |= DEV_TX_OFFLOAD_MBUF_FAST_FREE;
+        if (dev_info.tx_offload_capa & RTE_ETH_TX_OFFLOAD_MBUF_FAST_FREE)
+                local_port_conf.txmode.offloads |= RTE_ETH_TX_OFFLOAD_MBUF_FAST_FREE;
         local_port_conf.rx_adv_conf.rss_conf.rss_hf &= dev_info.flow_type_rss_offloads;
         if (local_port_conf.rx_adv_conf.rss_conf.rss_hf != port_conf.rx_adv_conf.rss_conf.rss_hf) {
                 printf(
@@ -384,8 +383,7 @@ init_port(uint8_t port_num) {
         }
 
         if (ONVM_USE_JUMBO_FRAMES) {
-                local_port_conf.rxmode.max_rx_pkt_len = 9600 + RTE_ETHER_CRC_LEN + RTE_ETHER_HDR_LEN;
-                local_port_conf.rxmode.offloads |= DEV_RX_OFFLOAD_JUMBO_FRAME;
+                local_port_conf.rxmode.mtu = MAX_MTU;
         }
 
         if ((retval = rte_eth_dev_configure(port_num, rx_rings, tx_rings, &local_port_conf)) != 0)
@@ -509,7 +507,7 @@ check_all_ports_link_status(uint8_t port_num, uint32_t port_mask) {
                                             "Port %d Link Up - speed %u "
                                             "Mbps - %s\n",
                                             ports->id[portid], (unsigned)link.link_speed,
-                                            (link.link_duplex == ETH_LINK_FULL_DUPLEX) ? ("full-duplex")
+                                            (link.link_duplex == RTE_ETH_LINK_FULL_DUPLEX) ? ("full-duplex")
                                                                                        : ("half-duplex\n"));
                                 else
                                         printf("Port %d Link Down\n", (uint8_t)ports->id[portid]);

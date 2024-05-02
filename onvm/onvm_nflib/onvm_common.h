@@ -59,6 +59,9 @@
 #include "onvm_config_common.h"
 #include "onvm_msg_common.h"
 
+#define JUMBO_FRAME_MAX_SIZE    0x2600
+#define MAX_MTU (JUMBO_FRAME_MAX_SIZE - (RTE_ETHER_HDR_LEN + RTE_ETHER_CRC_LEN))
+
 #define ONVM_NF_HANDLE_TX 1                   // should be true if NFs primarily pass packets to each other
 #define ONVM_NF_SHUTDOWN_CORE_REASSIGNMENT 0  // should be true if on NF shutdown onvm_mgr tries to reallocate cores
 
