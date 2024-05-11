@@ -13,6 +13,6 @@ onvm_mgr_include = include_directories('.')
 
 executable(onvm_mgr_app_name, 
     sources,
-    include_directories: [onvm_mgr_include, onvm_headers, onvm_nflib_headers], 
+    include_directories: [onvm_mgr_include, onvm_includes], 
     dependencies: [onvm_dpdk_shared_dep, libonvm_dep, libonvmhelper_dep, onvm_math_dep],
 )

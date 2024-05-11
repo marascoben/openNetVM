@@ -26,3 +26,5 @@ libonvm = library(
 libonvm_dep = declare_dependency(
     link_with: libonvm,
     dependencies: libonvm_deps)
+
+onvm_nflib_dep += libonvm_dep

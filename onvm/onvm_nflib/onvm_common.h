@@ -328,6 +328,9 @@ struct onvm_nf {
                 /* Mutex for NF sem_wait */
                 sem_t *nf_mutex;
         } shared_core;
+
+        /** Used by RTE_MBUF_DYNFIELD to access ovnm pkt meta*/
+        int dynfield_offset;
 };
 
 /*
