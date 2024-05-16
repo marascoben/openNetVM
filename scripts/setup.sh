@@ -47,7 +47,8 @@ packages=("build-essential" \
           "python3-venv" \
           "ninja-build" \
           "pkg-config" \
-          "libnuma-dev")
+          "libnuma-dev" \
+          "libpcap-dev")
 install_packages=true
 
 pypackages=("meson" \

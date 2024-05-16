@@ -27,16 +27,17 @@ onvm_examples = [
 ]
 
 foreach example : onvm_examples
-    name = example
+    name = 'onvm_' + example
     sources = []
     includes = [include_directories(example), onvm_includes]
 
     subdir(example)
 
     executable(
-        'onvm' + name,
+        name,
         sources,
         include_directories: includes,
         dependencies: [onvm_dpdk_shared_dep, onvm_nflib_dep],
+        install_tag: name
     )
 endforeach

@@ -7,12 +7,13 @@ sources = files(
     'onvm_stats.c'
 )
 
-onvm_mgr_app_name = 'onvm_mgr'
-
 onvm_mgr_include = include_directories('.')
 
 executable(onvm_mgr_app_name, 
     sources,
     include_directories: [onvm_mgr_include, onvm_includes], 
     dependencies: [onvm_dpdk_shared_dep, libonvm_dep, libonvmhelper_dep, onvm_math_dep],
+    install: true,
+    install_dir: onvm_source + '/onvm/onvm_mgr',
+    install_tag: 'onvm_mgr'
 )

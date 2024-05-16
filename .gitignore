@@ -53,3 +53,7 @@ _preinstall
 
 # Python virtual environment
 env
+
+# Meson artifacts
+/insstall
+**/insstall/**

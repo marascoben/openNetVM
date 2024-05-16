@@ -4,6 +4,9 @@ add_global_arguments('-msse4', language : 'c')
 cc = meson.get_compiler('c')
 onvm_source = meson.current_source_dir()
 
+# ONVM configurations
+onvm_mgr_app_name = 'onvm_mgr'
+
 # DPDK dependencies
 onvm_dpdk = subproject('dpdk')
 onvm_dpdk_dep = onvm_dpdk.get_variable('dpdk_static_lib_deps')
@@ -15,8 +18,8 @@ onvm_math_dep = cc.find_library('m')
 
 # Include directories to be used when building components and examples
 onvm_includes = include_directories('onvm/', 
-                                        'onvm/onvm_nflib',
-                                        'onvm/onvm_mgr')
+                                    'onvm/onvm_nflib',
+                                    'onvm/onvm_mgr')
 
 # Build the ONVM components (onvm_mgr, nflib, lib)
 subdir('onvm')
