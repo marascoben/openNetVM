@@ -38,8 +38,6 @@
 #
 # Sets configuration items on the host system required to run openNetVM
 
-DPDK_DEVBIND=/subprojects/dpdk/usertools/dpdk-devbind.py
-
 # Check to make sure this script is running in the correct working
 # directory.
 # Ensure we're working relative to the onvm root directory
@@ -71,3 +69,15 @@ for CPU_PATH in /sys/devices/system/cpu/cpu[0-9]*; do
 done
 
 lscpu | grep -i -E  "^CPU\(s\):|core|socket" 
+
+
+# (3)
+# Load the uio kernel module from dpdk-kmods
+grep -m 1 "igb_uio" /proc/modules | cat
+if [ "${PIPESTATUS[0]}" != 0 ]; then
+    echo "- Loading uio kernel module"
+    sudo modprobe uio
+    sudo insmod sigb_uio.ko
+else
+    echo "- uio kernel module already loaded"
+fi

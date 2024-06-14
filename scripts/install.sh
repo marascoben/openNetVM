@@ -103,3 +103,10 @@ echo "  - installing $pyrequired"
 python3 -m venv $pyenv
 source env/bin/activate
 pip3 install $pyrequired
+
+
+# (4)
+# Build the dpdk-kmods uio kernel module
+echo "- Building the dpdk-kmods uio kernel module"
+cd subprojects/dpdk-kmods/linux/igb_uio
+make

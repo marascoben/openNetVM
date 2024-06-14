@@ -7,3 +7,7 @@
 [submodule "dpdk"]
 	path = subprojects/dpdk
 	url = https://github.com/DPDK/dpdk.git
+[submodule "subprojects/dpdk-kmods"]
+	path = subprojects/dpdk-kmods
+	url = https://dpdk.org/git/dpdk-kmods
+        ignore = all
