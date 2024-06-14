@@ -36,69 +36,38 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# A script to setup the developer environment to build OpenNetVM and its
-# subsequent components.
+# Sets configuration items on the host system required to run openNetVM
 
-packages=("build-essential" \
-          "python3" \
-          "python3-pip" \
-          "python3-setuptools" \
-          "python3-wheel" \
-          "python3-venv" \
-          "ninja-build" \
-          "pkg-config" \
-          "libnuma-dev" \
-          "libpcap-dev")
-install_packages=true
+DPDK_DEVBIND=/subprojects/dpdk/usertools/dpdk-devbind.py
 
-pypackages=("meson" \
-            "pyelftools")
-pyenv="env"
-
-# Check the passed arguments, and set the appropriate flags if a
-# particular argument is detected
-for arg in "$@"
-do
-    if [[ $arg == "--noinstall" ]]; then
-        install_packages=false
-        break
-    fi
-done
-
-# (1)
-# Install required packages for development
-required=$(IFS=' '; echo "${packages[*]}")
-
-echo "- Installing required packages"
-if [ "$install_packages" = true ]; then
-    echo "  - installing: $required"
-    sudo apt-get install $required
-else
-    echo "  - skipping due to --noinstall flag"
+# Check to make sure this script is running in the correct working
+# directory.
+# Ensure we're working relative to the onvm root directory
+if [ "$(basename "$(pwd)")" != "openNetVM" ]; then
+    echo "Please run the installation script from the parent openNetVM directory"
 fi
 
+# Check sudo privileges
+sudo -v 
+
+
+# (1)
+# Disable address space layout randomization (ASLR)
+echo "- Disabling ASLR"
+sudo sh -c "echo 0 > /proc/sys/kernel/randomize_va_space"
+
+
 # (2)
-# Initialize the Git submodules (dpdk & pkt_gen)
-echo "- Initializing Git submodules"
+# Disable hyperthreading
+echo "- Disabling hyperthreading"
 
-git submodule update --init
+CPUS_TO_SKIP=" $(cat /sys/devices/system/cpu/cpu*/topology/thread_siblings_list | sed 's/[^0-9].*//' | sort | uniq | tr "\r\n" "  ") "
+for CPU_PATH in /sys/devices/system/cpu/cpu[0-9]*; do
+        CPU="$(echo "$CPU_PATH" | tr -cd "0-9")"
+        echo "$CPUS_TO_SKIP" | grep " $CPU " > /dev/null
+        if [ $? -ne 0 ]; then
+            echo 0 > "$CPU_PATH"/online
+        fi
+done
 
-# (3)
-# Create the Python environment (this will be used for compiling onvm)
-pyrequired=$(IFS=' '; echo "${pypackages[*]}")
-
-echo "- Setup Python environment"
-echo "  - installing $pyrequired"
-
-python3 -m venv $pyenv
-source env/bin/activate
-pip3 install $pyrequired
-
-# (3.1)
-# Set environment variables in python environment
-echo "  - setting environment variables"
-
-echo export ONVM_HOME=$(pwd) >> ./$pyenv/bin/activate
-echo export ONVM_NUM_HUGEPAGES=1024 >> ./$pyenv/bin/activate
-echo export RTE_SDK=$(pwd)/dpdk >> ./$pyenv/bin/activate
-echo export RTE_TARGET=x86_64-native-linuxapp-gcc >> ./$pyenv/bin/activate
+lscpu | grep -i -E  "^CPU\(s\):|core|socket" 
