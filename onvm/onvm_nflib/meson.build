@@ -21,7 +21,8 @@ libonvm = library(
     'libonvm', 
     sources, 
     include_directories : libonvm_includes,
-    dependencies : libonvm_deps)
+    dependencies : libonvm_deps,
+    install: true)
 
 libonvm_dep = declare_dependency(
     link_with: libonvm,

@@ -77,7 +77,7 @@ grep -m 1 "igb_uio" /proc/modules | cat
 if [ "${PIPESTATUS[0]}" != 0 ]; then
     echo "- Loading uio kernel module"
     sudo modprobe uio
-    sudo insmod sigb_uio.ko
+    sudo insmod ./subprojects/dpdk-kmods/linux/igb_uio/igb_uio.ko
 else
     echo "- uio kernel module already loaded"
 fi
