@@ -38,12 +38,23 @@
 #
 # Sets configuration items on the host system required to run openNetVM
 
-# Check to make sure this script is running in the correct working
+arg_hugepages=true
+
+# Basic check to make sure this script is running in the correct working
 # directory.
-# Ensure we're working relative to the onvm root directory
 if [ "$(basename "$(pwd)")" != "openNetVM" ]; then
     echo "Please run the installation script from the parent openNetVM directory"
 fi
+
+# Parse the passed arguments, and set the appropriate flags if a
+# particular argument is detected
+for arg in "$@"
+do
+    if [[ $arg == "--nohugepages" ]]; then
+        arg_hugepages=false
+        break
+    fi
+done
 
 # Check sudo privileges
 sudo -v 
@@ -80,4 +91,16 @@ if [ "${PIPESTATUS[0]}" != 0 ]; then
     sudo insmod ./subprojects/dpdk-kmods/linux/igb_uio/igb_uio.ko
 else
     echo "- uio kernel module already loaded"
+fi
+
+
+# (4)
+# Setup hugepages.
+# This will be skipped if --nohugepages is passed in.
+if [ "$arg_hugepages" = true ]; then
+    echo "- Configuring hugepages"
+    . ./scripts/dpdk_helper_scripts.sh
+    set_numa_pages "$hp_count"
+else
+    echo "- Skipping hugepages"
 fi
