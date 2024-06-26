@@ -43,6 +43,18 @@ ninja
 
 ### Running onvm_mgr
 
+After finishing build, from the build directory, you can run the `install` command to place the compiled executables in ther source directories.
+
+```text
+meson install
+```
+
+Then, you can use our provided startup script to launch onvm_mgr. This scripts assumes the `openNetVM` folder is your working directory.
+
+```text
+./scripts/startup.sh
+```
+
 ## Usage Guide
 
 ### Sample NFs
@@ -85,9 +97,9 @@ If you use OpenNetVM in your work, please cite our paper:
 [docker]: https://www.docker.com/
 [nsdi14]: http://faculty.cs.gwu.edu/timwood/papers/14-NSDI-netvm.pdf
 [hotmiddlebox16]: http://faculty.cs.gwu.edu/timwood/papers/16-HotMiddlebox-onvm.pdf
-[examples]: docs/Examples.md
-[nfs]: docs/NF_Dev.md
-[docker-nf]: docs/Docker.md
+[examples]: https://opennetvm.readthedocs.io/en/develop/examples/index.html
+[nfs]: https://opennetvm.readthedocs.io/en/develop/nfdev/index.html
+[docker-nf]: https://opennetvm.readthedocs.io/en/develop/docker/index.html
 [dev]: https://github.com/sdnfv/openNetVM/tree/develop
 [mast]: https://github.com/sdnfv/openNetVM/tree/master
 [rels]: docs/Releases.md
