@@ -14,12 +14,12 @@ You can find information about research projects building on [OpenNetVM][onvm] a
 
 ## Getting Started
 
-We've provided a bash script to assist with setting up your development environment for working with OpenNetVM. Take a look at [`scripts/setup.sh`](/scripts/setup.sh) to see a full list of installed packages.
+We've provided two scripts to install required dependencies, and configure your machine to run OpenNetVM. Required dependencies are installed by [`scripts/install.sh`](/scripts/install.sh), and configuration is done by [`scripts/setup_runtime.sh`](/scripts/setup_runtime.sh).
 
 From the `openNetVM` folder, run the following two commands:
 
 ```text
-./scripts/setup.sh
+./scripts/install.sh
 ```
 
 ```text

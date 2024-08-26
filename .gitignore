@@ -57,3 +57,6 @@ env
 # Meson artifacts
 /insstall
 **/insstall/**
+
+# Submodules
+/subprojects/dpdk-kmods/*

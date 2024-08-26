@@ -80,6 +80,7 @@ required=$(IFS=' '; echo "${packages[*]}")
 echo "- Installing required packages"
 if [ "$install_packages" = true ]; then
     echo "  - installing: $required"
+    sudo apt-get update
     sudo apt-get install $required
 else
     echo "  - skipping due to --noinstall flag"
