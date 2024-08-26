@@ -272,7 +272,7 @@ fi
 sudo rm -rf /mnt/huge/rtemap_*
 # watch out for variable expansion
 # shellcheck disable=SC2086
-sudo ./onvm/onvm_mgr/onvm_mgr -l "$cpu" -n 4 --proc-type=primary ${virt_addr} -- -p ${ports} -n ${nf_cores} ${num_srvc} ${def_srvc} ${stats} ${stats_sleep_time} ${verbosity_level} ${ttl} ${packet_limit} ${shared_cpu_flag} ${jumbo_frames_flag}
+sudo ./bin/onvm_mgr -l "$cpu" -n 4 --proc-type=primary ${virt_addr} -- -p ${ports} -n ${nf_cores} ${num_srvc} ${def_srvc} ${stats} ${stats_sleep_time} ${verbosity_level} ${ttl} ${packet_limit} ${shared_cpu_flag} ${jumbo_frames_flag}
 
 if [ "${stats}" = "-s web" ]
 then

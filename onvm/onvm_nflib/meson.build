@@ -22,7 +22,9 @@ libonvm = library(
     sources, 
     include_directories : libonvm_includes,
     dependencies : libonvm_deps,
-    install: true)
+    install: true,
+    install_tag: 'onvm',
+    install_dir: onvm_output_dir + '/lib')
 
 libonvm_dep = declare_dependency(
     link_with: libonvm,

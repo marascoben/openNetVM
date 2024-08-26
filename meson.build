@@ -4,6 +4,9 @@ add_global_arguments('-msse4', language : 'c')
 cc = meson.get_compiler('c')
 onvm_source = meson.current_source_dir()
 
+# Output directory that executables are installed into
+onvm_output_dir = meson.current_source_dir() + '/bin'
+
 # ONVM configurations
 onvm_mgr_app_name = 'onvm_mgr'
 

@@ -38,8 +38,8 @@ foreach example : onvm_examples
         sources,
         include_directories: includes,
         dependencies: [onvm_dpdk_shared_dep, onvm_nflib_dep],
-        install_tag: name,
         install: true,
-        install_dir: onvm_source + '/examples/' + example
+        install_tag: 'onvm',
+        install_dir: onvm_output_dir + '/nf/' + example
     )
 endforeach

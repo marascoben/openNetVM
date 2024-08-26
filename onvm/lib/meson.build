@@ -6,7 +6,9 @@ libonvmhelper = library(
     'libonvmhelper', 
     sources,
     include_directories : libonvmhelper_includes,
-    install: true
+    install: true,
+    install_tag: 'onvm',
+    install_dir: onvm_output_dir + '/lib'
 )
 
 libonvmhelper_dep = declare_dependency(

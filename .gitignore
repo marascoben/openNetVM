@@ -60,3 +60,6 @@ env
 
 # Submodules
 /subprojects/dpdk-kmods/*
+
+# Output directories
+/bin
