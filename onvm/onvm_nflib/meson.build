@@ -14,6 +14,7 @@ libonvm_includes = include_directories('.')
 
 libonvm_deps = [
     onvm_dpdk_shared_dep,
+    onvm_thread_dep,
     libonvmhelper_dep
 ]
 

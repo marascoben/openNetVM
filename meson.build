@@ -18,6 +18,7 @@ onvm_dpdk_shared_dep = onvm_dpdk.get_variable('dpdk_shared_lib_deps')
 # ONVM dependencies
 onvm_nflib_dep = []
 onvm_math_dep = cc.find_library('m')
+onvm_thread_dep = dependency('threads')
 
 # Include directories to be used when building components and examples
 onvm_includes = include_directories('onvm/', 
