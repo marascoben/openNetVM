@@ -19,7 +19,7 @@ We've provided two scripts to install required dependencies, and configure your 
 From the `openNetVM` folder, run the following two commands:
 
 ```text
-./scripts/install.sh
+sudo ./scripts/install.sh
 ```
 
 ```text
@@ -31,25 +31,20 @@ sudo ./scripts/setup_runtime.sh
 OpenNetVM uses the [Meson][meson] build system to compile all components, including dpdk. From the `openNetVM` parent folder run the following to setup build:
 
 ```text
-meson build
+./scripts/build.sh
 ```
 
-Then, `cd` into the build folder and run ninja to compile:
+This will take care of the Meson build setup, compilation, and installation of onvm shared libriaries.
+
+Afterwards you may need to run the following comand to update the linker.
 
 ```text
-cd ./build
-ninja
+ldconfig
 ```
 
 ### Running onvm_mgr
 
-After finishing build, from the build directory, you can run the `install` command to place the compiled executables in ther source directories.
-
-```text
-meson install
-```
-
-Then, you can use our provided startup script to launch onvm_mgr. This scripts assumes the `openNetVM` folder is your working directory.
+You can use our provided startup script to launch onvm_mgr. This scripts assumes the `openNetVM` folder is your working directory.
 
 ```text
 ./scripts/startup.sh

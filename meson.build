@@ -1,4 +1,5 @@
 project('openNetVM', 'c')
+
 add_global_arguments('-msse4', language : 'c')
 
 cc = meson.get_compiler('c')
@@ -11,14 +12,13 @@ onvm_output_dir = meson.current_source_dir() + '/bin'
 onvm_mgr_app_name = 'onvm_mgr'
 
 # DPDK dependencies
-onvm_dpdk = subproject('dpdk')
-onvm_dpdk_dep = onvm_dpdk.get_variable('dpdk_static_lib_deps')
-onvm_dpdk_shared_dep = onvm_dpdk.get_variable('dpdk_shared_lib_deps')
+onvm_dpdk_dep = dependency('libdpdk')
 
 # ONVM dependencies
 onvm_nflib_dep = []
 onvm_math_dep = cc.find_library('m')
 onvm_thread_dep = dependency('threads')
+onvm_systemd_dep = cc.find_library('systemd')
 
 # Include directories to be used when building components and examples
 onvm_includes = include_directories('onvm/', 

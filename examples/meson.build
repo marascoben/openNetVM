@@ -37,7 +37,7 @@ foreach example : onvm_examples
         name,
         sources,
         include_directories: includes,
-        dependencies: [onvm_dpdk_shared_dep, onvm_nflib_dep],
+        dependencies: [onvm_dpdk_dep, onvm_nflib_dep],
         install: true,
         install_tag: 'onvm',
         install_dir: onvm_output_dir + '/nf/' + example

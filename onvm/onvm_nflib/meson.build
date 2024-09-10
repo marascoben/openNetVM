@@ -13,7 +13,7 @@ sources = files(
 libonvm_includes = include_directories('.')
 
 libonvm_deps = [
-    onvm_dpdk_shared_dep,
+    onvm_dpdk_dep,
     onvm_thread_dep,
     libonvmhelper_dep
 ]
@@ -23,9 +23,9 @@ libonvm = library(
     sources, 
     include_directories : libonvm_includes,
     dependencies : libonvm_deps,
+    pic: true,
     install: true,
-    install_tag: 'onvm',
-    install_dir: onvm_output_dir + '/lib')
+    install_tag: 'onvm')
 
 libonvm_dep = declare_dependency(
     link_with: libonvm,

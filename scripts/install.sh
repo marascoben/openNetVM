@@ -48,7 +48,8 @@ packages=("build-essential" \
           "ninja-build" \
           "pkg-config" \
           "libnuma-dev" \
-          "libpcap-dev")
+          "libpcap-dev" \
+          "libsystemd-dev")
 install_packages=true
 
 pypackages=("meson" \
@@ -81,7 +82,7 @@ echo "- Installing required packages"
 if [ "$install_packages" = true ]; then
     echo "  - installing: $required"
     sudo apt-get update
-    sudo apt-get install $required
+    sudo apt-get install $required -y
 else
     echo "  - skipping due to --noinstall flag"
 fi
@@ -111,3 +112,13 @@ pip3 install $pyrequired
 echo "- Building the dpdk-kmods uio kernel module"
 cd subprojects/dpdk-kmods/linux/igb_uio
 make
+cd -
+
+# (5)
+# Install dpdk
+echo "- Installing dpdk"
+cd subprojects/dpdk
+meson build
+ninja -C build
+ninja -C build install
+sudo ldconfig
